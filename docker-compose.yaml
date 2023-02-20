@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  php-apache-environment:
+    build: .
+    container_name: joomla
+    environment:
+      MEMORY_LIMIT: 3000M 
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - 8010:80
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - joomladatadb:/var/lib/mysql
+  adminer:
+    image: adminer:4.7.6
+    container_name: joomla-adminer
+    ports:
+        - "1110:8080"
+volumes:
+  joomladatadb:
